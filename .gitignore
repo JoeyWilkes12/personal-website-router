@@ -1,0 +1,5 @@
+/.DS_Store
+/output/playwright/
+/.playwright-cli/
+/_site/
+/.jekyll-cache/

@@ -1,0 +1,6 @@
+url: "https://joeywilkes12.github.io"
+baseurl: "/personal-website-router"
+exclude:
+  - README.md
+  - scripts
+  - output
