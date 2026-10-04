@@ -6,15 +6,20 @@ A permanent QR-code address that redirects immediately to Joey Wilkes online.
 - Repository: https://github.com/JoeyWilkes12/personal-website-router
 - QR asset: `personal-website-router-qr.png` (1176 × 1176 pixels, 300 DPI, black on white, high error correction).
 
+See the [maintenance guide](MAINTENANCE.md) for changing or reverting the
+destination, local and managed-worktree workflows, validation, commit/push
+commands, PR approval, and publication.
+
 ## Change the destination
 
 Edit only the `redirect_url` value at the top of `index.html`:
 
 ```yaml
-redirect_url: "https://github.com/jbwilkes"
+redirect_url: "https://Joey-wilkes12-website-2026-10-03.replit.app"
 ```
 
-Commit and push to `main`. GitHub Pages runs Jekyll automatically and replaces
+Commit and push a feature branch, then open a PR. After you approve and merge it
+into `main`, GitHub Pages runs Jekyll automatically and replaces
 every `page.redirect_url` reference with that value. This updates the JavaScript
 redirect, HTML refresh, fallback link, canonical link, and structured metadata
 together. Keep the URL in double quotes and use an absolute HTTPS address.
@@ -35,10 +40,12 @@ Do not add `.nojekyll`: it would disable the URL substitutions. Opening the sour
 HTML directly also skips Jekyll; preview the generated site instead.
 
 Run the automated hyperlink and generated-content regression check before a
-release, supplying a local Jekyll preview URL, then verify the public deployment:
+release, supplying a rendered local preview URL, then verify the public deployment.
+The maintenance guide includes a complete preview setup using
+`scripts/render_preview.rb`:
 
 ```sh
-python3 scripts/check_links.py --site-url http://127.0.0.1:4000/personal-website-router/
+python3 scripts/check_links.py --site-url http://127.0.0.1:4178/personal-website-router/
 python3 scripts/check_links.py
 ```
 
