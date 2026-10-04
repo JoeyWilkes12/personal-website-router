@@ -15,7 +15,7 @@ commands, PR approval, and publication.
 Edit only the `redirect_url` value at the top of `index.html`:
 
 ```yaml
-redirect_url: "https://Joey-wilkes12-website-2026-10-03.replit.app"
+redirect_url: "https://Joey-wilkes12-website-2026-10-04-static.replit.app/"
 ```
 
 Commit and push a feature branch, then open a PR. After you approve and merge it
