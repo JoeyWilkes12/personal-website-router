@@ -6,6 +6,9 @@ A permanent QR-code address that redirects immediately to Joey Wilkes online.
 - Repository: https://github.com/JoeyWilkes12/personal-website-router
 - QR asset: `personal-website-router-qr.png` (1176 × 1176 pixels, 300 DPI, black on white, high error correction).
 
+Environment role: routes to **Production** on `main`; a ready failover PR routes
+to **Staging**. Agents: see [AGENTS.md](AGENTS.md).
+
 See the [maintenance guide](MAINTENANCE.md) for changing or reverting the
 destination, local and managed-worktree workflows, validation, commit/push
 commands, PR approval, and publication.
