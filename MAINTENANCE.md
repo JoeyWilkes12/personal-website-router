@@ -81,10 +81,10 @@ Codex for cleanup. See [official worktree guidance](https://developers.openai.co
 
 ## 2. Change the destination
 
-Edit `index.html` in your chosen checkout. For the Replit website, set:
+Edit `index.html` in your chosen checkout. For the Production website on Replit (app Landing-portfolio-Prod), set:
 
 ```yaml
-redirect_url: "https://Joey-wilkes12-website-2026-10-04-static.replit.app/"
+redirect_url: "https://joey-wilkes.replit.app/"
 ```
 
 Keep an absolute HTTPS URL in double quotes. The QR PNG does not change.
@@ -101,7 +101,7 @@ Check the external destination through its HTTP redirect chain:
 ```sh
 curl --fail --show-error --location --output /dev/null \
   --write-out 'HTTP %{http_code}: %{url_effective}\n' \
-  https://Joey-wilkes12-website-2026-10-04-static.replit.app/
+  https://joey-wilkes.replit.app/
 ```
 
 Then render a local preview and run the existing automated checks. A raw
