@@ -81,7 +81,7 @@ Codex for cleanup. See [official worktree guidance](https://developers.openai.co
 
 ## 2. Change the destination
 
-Edit `index.html` in your chosen checkout. For the Production website on Replit (app Landing-portfolio-Prod), set:
+Edit `index.html` in your chosen checkout. For the Production website on Replit (app Joey Wilkes Home Production), set:
 
 ```yaml
 redirect_url: "https://joey-wilkes.replit.app/"
