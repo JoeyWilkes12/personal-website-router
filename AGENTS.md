@@ -11,7 +11,7 @@ visitors to the current destination.
 | Dev | Local Liquid preview, also shared on the owner's tailnet | Render and check changes before a PR |
 | Test | A throwaway duplicate Replit app | Not a router destination |
 | Staging | https://joeywilkes12.github.io/personal-website-backup/ | Failover destination (PR branch `failover/github-pages-backup`) |
-| Production | https://joey-wilkes12-website-2026-10-04-static.replit.app, moving to https://joey-wilkes12-home.replit.app | The destination on `main` |
+| Production | https://joey-wilkes.replit.app (Replit app Landing-portfolio-Prod) | The destination on `main` |
 
 The full environment reference lives in the owner's private source repository.
 
