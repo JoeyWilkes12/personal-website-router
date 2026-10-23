@@ -1,74 +1,73 @@
-# Personal website router
+# Personal Website — QR Code Router
 
-A permanent QR-code address that redirects immediately to Joey Wilkes online.
+This repository provides a stable web address for QR codes that link to Joey Wilkes's personal website. Visitors scan a code, open the router, and are forwarded to the current website.
 
-- Public website: https://joeywilkes12.github.io/personal-website-router/
-- Repository: https://github.com/JoeyWilkes12/personal-website-router
-- QR asset: `personal-website-router-qr.png` (1176 × 1176 pixels, 300 DPI, black on white, high error correction).
+The router lets you **print, laminate, and distribute a QR code, then maintain its destination in one place.** If the website moves to another URL or hosting provider, update the router while keeping the address encoded in the QR code unchanged.
 
-Environment role: routes to **Production** on `main`; a ready failover PR routes
-to **Staging**. Agents: see [AGENTS.md](AGENTS.md).
+## Why use a router?
 
-See the [maintenance guide](MAINTENANCE.md) for changing or reverting the
-destination, local and managed-worktree workflows, validation, commit/push
-commands, PR approval, and publication.
+Printed materials can remain in circulation long after they are produced. A router separates those materials from the website's current location:
 
-## Change the destination
+- **Preserve printed materials.** QR codes that point to the router can continue to work after a destination change, without reprinting or redistributing them.
+- **Centralize updates.** One destination setting updates the redirect for every copy of the same QR code.
+- **Support future moves.** The personal website can move between hosting providers while retaining a consistent entry point for visitors.
 
-Edit only the `redirect_url` value at the top of `index.html`:
+This depends on preserving the router URL and keeping its GitHub Pages publication available. The benefit applies to QR codes that encode the router address.
 
-```yaml
-redirect_url: "https://joey-wilkes.replit.app/"
+## Routing
+
+```mermaid
+flowchart LR
+    QR[Printed or laminated QR code] --> Router[Stable personal website router URL]
+    Router --> Website[Current personal website]
 ```
 
-Commit and push a feature branch, then open a PR. After you approve and merge it
-into `main`, GitHub Pages runs Jekyll automatically and replaces
-every `page.redirect_url` reference with that value. This updates the JavaScript
-redirect, HTML refresh, fallback link, canonical link, and structured metadata
-together. Keep the URL in double quotes and use an absolute HTTPS address.
+| Address | URL |
+| --- | --- |
+| **Encode in the QR code** | [https://joeywilkes12.github.io/personal-website-router/](https://joeywilkes12.github.io/personal-website-router/) |
+| Current destination website | [https://joey-wilkes-home.vercel.app/](https://joey-wilkes-home.vercel.app/) |
 
-JavaScript uses `location.replace()` so the browser's Back button doesn't loop
-through the router. The HTML refresh also works with JavaScript disabled. The
-visible link provides a manual way to continue if automatic navigation is blocked.
-This is a browser redirect served with HTTP 200, rather than an HTTP 301/302.
+The router address stays the same when the destination changes. The destination website is maintained and hosted independently of this repository. The reusable [QR code PNG](personal-website-router-qr.png) is included here; preserve its white quiet zone when placing or printing it.
 
-The QR encodes the **router's public address**, not the destination. Printed QR
-codes keep working after a destination change. Keep the repository name and Pages
-address stable. Allow GitHub Pages a few minutes to publish a push.
+## Implementation
 
-## Publishing and checks
+The router is a static HTML page with three paths to the same destination:
 
-GitHub Pages publishes the root of the `main` branch with its built-in Jekyll build.
-Do not add `.nojekyll`: it would disable the URL substitutions. Opening the source
-HTML directly also skips Jekyll; preview the generated site instead.
+- A **meta refresh** forwards the browser to the destination.
+- **JavaScript** uses `window.location.replace(...)` to navigate without adding the router page to browser history.
+- A **manual link** lets visitors continue if automatic navigation does not occur.
 
-Run the automated hyperlink and generated-content regression check before a
-release, supplying a rendered local preview URL, then verify the public deployment.
-The maintenance guide includes a complete preview setup using
-`scripts/render_preview.rb`:
+The `redirect_url` setting in [index.html](index.html) supplies all three paths, the canonical link, and structured metadata. GitHub Pages processes the Liquid template through Jekyll so those references stay consistent.
 
-```sh
-python3 scripts/check_links.py --site-url http://127.0.0.1:4178/personal-website-router/
-python3 scripts/check_links.py
-```
+No application backend or database is required. This is a browser redirect served with HTTP 200, rather than an HTTP 301 or 302 response.
 
-The checker follows HTTP redirects, fails on HTTP 4xx/5xx, and checks the published
-redirect destinations, metadata, sitemap, robots file, and PNG. Browser regression
-coverage checks immediate navigation with and without JavaScript, Back-button
-behavior, the fallback link, keyboard focus, and overflow at 390px and 1440px.
-With Playwright CLI open on that localhost preview, run
-`run-code --filename scripts/browser_check.js`. The test substitutes a local
-destination so the browser does not visit external sites.
+## Deployment
 
-`robots.txt` allows public content. Because this is a GitHub project site, its file
-is under the project path; domain-wide crawler rules belong to the account's root
-site. The canonical URL points crawlers to the current destination.
+GitHub Pages publishes this repository with the following configuration:
 
-## Shared QR source
+| Setting | Value |
+| --- | --- |
+| Publishing branch | `main` |
+| Publishing folder | `/` (repository root) |
+| Router source | [index.html](index.html) |
+| Site configuration | [_config.yml](_config.yml) |
+| Template processing | GitHub Pages Jekyll build |
 
-The workspace's reusable source is
-`shared-assets/qr/personal-website-router-qr.png`. This repository includes an
-identical copy so deployment never needs access to the parent workspace.
-Regenerate the shared source with the QR Code Generator skill only if the stable
-Pages address changes, then copy it here. The four-module white border is the
-required quiet zone; preserve it when printing or placing the image.
+Keep Jekyll enabled: adding `.nojekyll` or opening the source HTML directly skips the URL substitutions. Preview rendered content when validating changes. The README and maintenance documentation are excluded from the published site.
+
+## Changing the destination
+
+1. Confirm the replacement website is published and accessible at its new URL.
+2. Create a branch from `main` and change only the `redirect_url` setting at the top of `index.html`, using an absolute HTTPS URL in double quotes:
+
+   ```yaml
+   redirect_url: "https://joey-wilkes-home.vercel.app/"
+   ```
+
+3. Update the current destination recorded in this README, render the page, and run the checks described in the [maintenance guide](MAINTENANCE.md).
+4. Open a pull request against `main` for review and approval before merging.
+5. After GitHub Pages finishes deploying, open the router URL and scan a printed QR code to verify that both reach the new website.
+
+Keep the repository name, Pages address, and encoded QR URL unchanged. Existing printed and laminated copies can then continue directing visitors to the current website.
+
+The [maintenance guide](MAINTENANCE.md) includes detailed preview, validation, recovery, and publication workflows. Use `redirect_url` in `index.html` as the source of truth for the configured destination.
